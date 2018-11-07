@@ -11,15 +11,17 @@ image, contours, hierarchy = cv.findContours(thresh, cv.RETR_TREE, cv.CHAIN_APPR
 #findContours is to find the contours, return three : image is the image of contours
 #contours is the position of contours
 #hierarchy I don't know what used for...
-print(img.shape)
-cv.drawContours(img, contours, -1, (0, 0, 255), 3)
-#to draw contours on the picture 'img'
-#-1 is to draw all contours
-#(0, 0, 255) is red
-#3 is the thin of line
+print(len(contours))
+for i in range(len(contours)):
+	ground = np.zeros((512, 512), np.uint8)
+	cv.drawContours(ground, contours, i, 255, 3)
+	cv.imshow('contour'+str(i), ground)
+	#cv.drawContours(ground, contours, -1, 255, 3)
+	#to draw contours on the picture 'img'
+	#-1 is to draw all contours, i is to show contours one by one
+	#(0, 0, 255) is red
+	#3 is the thin of line
 
-cv.imshow('res', img)
-cv.imshow('thre', thresh)
 
 cv.waitKey(0)
 cv.destroyAllWindows()
