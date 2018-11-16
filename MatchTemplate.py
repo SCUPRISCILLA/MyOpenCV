@@ -8,6 +8,7 @@ template = cv.imread('face.jpg', 0)
 h, w = template.shape[0:2]
 
 res = cv.matchTemplate(img, template, cv.TM_CCOEFF_NORMED)
+#match template only the same size, if we make the img bigger, and it will not match
 cv.imshow('winname', res)
 thre = 0.8
 loc = np.where(res >= thre)
