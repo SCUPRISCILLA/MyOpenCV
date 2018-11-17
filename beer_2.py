@@ -5,7 +5,7 @@
 import cv2 as cv
 import numpy as np
 
-for n in range(0, 22):
+for n in range(0, 10):
 	e1 = cv.getTickCount()
 	img = cv.imread('./BEER/Good/'+str(n)+'.tif')
 	H, W = img.shape[0:2]  #get size of image
@@ -56,7 +56,7 @@ for n in range(0, 22):
 		radius = int(radius)  #radius
 		#print(x, y)
 		#print(radius)
-		if radius < 25:  #which is our target
+		if radius < 30:  #which is our target
 			x, y, w, h = cv.boundingRect(contours[i])  #make a bound rectangle, (x, y)is youshangjia
 			if (x == 119 and y == 294) or (x == 133 and y == 49) or (x == 161 and y == 320) or (x == 157 and y == 39) or (x == 127 and y == 292):
 				continue
@@ -72,6 +72,7 @@ for n in range(0, 22):
 	cv.putText(imgrgb, 'beer number is ' + str(num), (50, 350), cv.FONT_HERSHEY_SIMPLEX, 0.8, (106, 106, 255), 2, cv.LINE_AA)
 	cv.putText(imgrgb, 'time: ' + str(time) + 's', (50, 400), cv.FONT_HERSHEY_SIMPLEX, 0.8, (214, 112, 218), 2, cv.LINE_AA)
 	cv.imshow('final'+str(n), imgrgb)
+	#cv.imwrite('imgres'+str(n)+'.jpg', imgrgb)
 
 	#print("the num of beers is " + str(num))
 cv.waitKey(0)
