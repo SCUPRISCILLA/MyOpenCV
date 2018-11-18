@@ -5,9 +5,9 @@
 import cv2 as cv
 import numpy as np
 
-for n in range(0, 10):
+for n in range(3, 4):
 	e1 = cv.getTickCount()
-	img = cv.imread('./BEER/Good/'+str(n)+'.tif')
+	img = cv.imread('./BEER/Bad/'+str(n)+'.tif')
 	H, W = img.shape[0:2]  #get size of image
 	X = int(H/10)
 	Y = int(W/10)   #resize
@@ -24,14 +24,24 @@ for n in range(0, 10):
 	clahe = cv.createCLAHE(clipLimit = 8.0, tileGridSize = (50, 50))  #do the CLAHE (ju bu zhi fang tu jun heng)
 	#gray > 8, will be cut and devert to others
 	cl1 = clahe.apply(imggray)
+
+	#*****************************
 	#cv.imshow('clahe', cl1)
+	#*****************************
 
 	imgfilter = cv.bilateralFilter(cl1, 35, 45, 13)  # 35 48 13 do a bilateral filter to save edge and pass noise
+	
+	#******************************
 	#cv.imshow('filter', imgfilter)
+	#******************************
 
 	ret, thresh = cv.threshold(imgfilter, 100, 255, cv.THRESH_BINARY)  #do a threshold, to get a BW pic
 	thresh = cv.dilate(thresh, kerneldilate)  #do dilate to mask noise which is 0(peng zhang)
+	
+	#**************************
 	#cv.imshow('the1', thresh)
+	#**************************
+
 	thresh = cv.filter2D(thresh, -1, kernel2) #do average filter in order to get a better pir(less noise)
 	#cv.imshow('avg', thresh) 
 
@@ -56,7 +66,7 @@ for n in range(0, 10):
 		radius = int(radius)  #radius
 		#print(x, y)
 		#print(radius)
-		if radius < 30:  #which is our target
+		if radius <= 30:  #which is our target
 			x, y, w, h = cv.boundingRect(contours[i])  #make a bound rectangle, (x, y)is youshangjia
 			if (x == 119 and y == 294) or (x == 133 and y == 49) or (x == 161 and y == 320) or (x == 157 and y == 39) or (x == 127 and y == 292):
 				continue
